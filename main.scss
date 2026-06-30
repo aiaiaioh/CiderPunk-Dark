@@ -1,0 +1,589 @@
+/* =============================================================================
+   CIDERPUNK — DARK
+   -----------------------------------------------------------------------------
+   A pure-black OLED theme for Cider 4 with a neon cyberpunk accent (cyan by
+   default; six more accents ship alongside). Built against Cider 4's Vue 3 +
+   Quasar DOM.
+
+   Targeting note: Cider's stable hook is the [sfc-name='ComponentName']
+   attribute — raw class names change between releases. Cider auto-appends
+   !important to every declaration, so you rarely need to write it yourself.
+
+   TWEAK THE LOOK: change the --bcp-* tokens in the first block. Everything else
+   derives from them; the accent and the glow are the two knobs that matter. An
+   accent overlay (the accent-*.scss files) only has to redefine those tokens.
+
+   Credits: structural selector map adapted from Catppuccin for Cider (MIT);
+   named in the lineage of the original "Better Cider Theme" (MIT). See LICENSE.
+   ========================================================================== */
+
+body.body--dark {
+
+  /* --- palette tokens ----------------------------------------------------- */
+  --bcp-black:      #000000;   /* true OLED black — main background            */
+  --bcp-surface:    #07090b;   /* barely-raised panels                         */
+  --bcp-surface-2:  #0e1316;   /* cards, menus, drawers                        */
+  --bcp-elevated:   #161d22;   /* hovers, raised rows                          */
+  --bcp-line:       #1d262c;   /* dividers, borders                            */
+
+  /* ACCENT — every neon element in this theme derives from these lines, so an
+     accent overlay (see theme.yml) only has to redefine them. --bcp-accent-rgb
+     is the same colour as an "r, g, b" triplet and drives the glow + selection. */
+  --bcp-accent-rgb: 0, 224, 255;            /* neon accent as r, g, b           */
+  --bcp-cyan:       #00e0ff;                /* main accent (hex)                */
+  --bcp-cyan-deep:  #0096b0;                /* darker accent (scrollbar hover)  */
+
+  --bcp-glow:       0 0 8px  rgba(var(--bcp-accent-rgb), 0.55);
+  --bcp-glow-soft:  0 0 14px rgba(var(--bcp-accent-rgb), 0.32);
+  --bcp-sel:        rgba(var(--bcp-accent-rgb), 0.16);  /* selection / hover wash */
+
+  --bcp-text:       #e9f6fb;   /* near-white, faint cyan tint                  */
+  --bcp-subtext:    #93aab6;   /* secondary text                              */
+  --bcp-subtext-2:  #607581;   /* tertiary / captions                         */
+  --bcp-red:        #ff3b5c;   /* destructive / close                          */
+
+  /* --- map tokens onto Cider's own variables ------------------------------ */
+  background: var(--bcp-black);
+  color: var(--bcp-text);
+
+  --textDefault:        var(--bcp-text);
+  --systemPrimary:      var(--bcp-text);
+  --systemSecondary:    var(--bcp-subtext);
+  --systemTertiary:     var(--bcp-surface-2);
+  --systemQuaternary:   var(--bcp-sel);
+  --systemQuinary:      var(--bcp-sel);
+  --keyColor:           var(--bcp-cyan);
+  --musicKeyColor:      var(--bcp-cyan);
+  --tracklistAltRowColor: var(--bcp-surface);
+  --vibrantDivider:     var(--bcp-line);
+  --q-primary:          var(--bcp-cyan);
+  --q-info:             var(--bcp-cyan);
+  --accent:             var(--bcp-cyan);
+  --selection-bg:       var(--bcp-sel);
+
+  ::selection {
+    background-color: var(--bcp-sel);
+    color: var(--bcp-text);
+  }
+
+  /* SIGNATURE — cyberpunk scrollbars (WebView2 is Chromium) ----------------- */
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background: var(--bcp-line);
+    border-radius: 0;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--bcp-cyan-deep);
+    background-clip: padding-box;
+  }
+
+  /* =========================================================================
+     CHROME / TOP BAR + PLAYER LAYOUTS
+     Cider has several player layouts; data-layout-type tells you which is live.
+     ====================================================================== */
+  #app-viewport[data-layout-type="mojave"] .chrome-top,
+  #app-viewport[data-layout-type="mojave-if"] .chrome-top,
+  #app-viewport[data-layout-type="maverick"] .chrome-top,
+  #app-viewport[data-layout-type="maverick-if"] .chrome-top {
+    background: var(--bcp-black);
+  }
+
+  #app-viewport[data-layout-type="mojave"],
+  #app-viewport[data-layout-type="mojave-if"] {
+    [sfc-name='MojavePlayer'] {
+      background: var(--bcp-black);
+
+      .player { background: var(--bcp-surface); }
+
+      [sfc-name='AMProgressBar'] .overlay-progress-bar { background: var(--bcp-cyan); }
+      .volumeBar input.volume-range { --progressColor: var(--bcp-cyan); }
+    }
+  }
+
+  #app-viewport[data-layout-type="maverick"],
+  #app-viewport[data-layout-type="maverick-if"] {
+    [sfc-name='LCDPlayerMavericks'] .player { background: var(--bcp-surface); }
+    .lcdplayer-top { background: var(--bcp-black); }
+    .volumeBar input.volume-range { --progressColor: var(--bcp-cyan); }
+  }
+
+  /* --- Windows window controls (you're on Windows) ------------------------ */
+  .window-controls {
+    .window-control.close.isWin32:hover            { background-color: var(--bcp-red); }
+    .window-control.close.codicon.isWin32:hover:before { background-color: var(--bcp-black); }
+
+    .window-control.minimize.isWin32:hover,
+    .window-control.minmax.isWin32:hover           { background-color: var(--bcp-sel); }
+    .window-control.minimize.isWin32:hover:before,
+    .window-control.minmax.isWin32:hover:before    { background-color: var(--bcp-cyan); }
+
+    .window-control.close.isWin32:before,
+    .window-control.minmax.isWin32:before,
+    .window-control.minimize.isWin32:before        { background: var(--bcp-text); }
+  }
+
+  /* --- search box in the top chrome --------------------------------------- */
+  [sfc-name='HeaderSearch'] {
+    .search-box    { background: var(--bcp-surface-2); }
+    .dropdown-menu { background-color: var(--bcp-surface-2); }
+    [sfc-name='HeaderSearchItem'] [sfc-name='QItemSection'].ellipsis { color: var(--bcp-text); }
+  }
+
+  /* queue / lyrics toggle buttons in the chrome */
+  [sfc-name='QueueButton'] .autoplay-badge { color: var(--bcp-black); }
+  [sfc-name='QueueButton'].active,
+  [title='Lyrics'].active {
+    color: var(--bcp-cyan);
+    text-shadow: var(--bcp-glow);
+  }
+  [sfc-name='Explicit'] svg { fill: var(--bcp-cyan); }
+
+  /* =========================================================================
+     LEFT SIDEBAR
+     PORT NOTE: the original theme heavily restyled .app-sidebar-item; that
+     class is gone. The equivalent now lives under [sfc-name='Sidebar'].
+     ====================================================================== */
+  [sfc-name='Sidebar'] {
+    background: var(--bcp-black);
+    color: var(--bcp-subtext);
+    border-right: 1px solid var(--bcp-line);
+
+    .nav-icon { color: var(--bcp-cyan); }
+    .sidebar-label { opacity: 1; }
+
+    /* SIGNATURE — active nav item: cyan fill with a neon glow */
+    .sidebar_nav-btn:active,
+    .active {
+      background: var(--bcp-cyan);
+      box-shadow: var(--bcp-glow-soft);
+      .nav-icon, .nav-text { color: var(--bcp-black); }
+    }
+
+    [sfc-name='QTabs'] {
+      background-color: var(--bcp-surface-2);
+      .q-tab__indicator { background-color: var(--bcp-cyan); }
+      .q-tab--inactive  { color: var(--bcp-text); }
+      .q-tab--active    { color: var(--bcp-cyan); }
+    }
+
+    [sfc-name='PageTabList'] .title-text  { color: var(--bcp-text); }
+    [sfc-name='SidebarProfile'] .active   { color: var(--bcp-black); }
+  }
+
+  /* =========================================================================
+     MAIN CONTENT PANE  (RouterView)
+     ====================================================================== */
+  [sfc-name='RouterView'] {
+    background: var(--bcp-black);
+    color: var(--bcp-text);
+
+    .detail-content {
+      .blurb-text, .meta-data { color: var(--bcp-subtext); }
+      .chip-name { opacity: 1; color: var(--bcp-cyan); }
+      .chip-favorite [sfc-name='QIcon'] { color: var(--bcp-cyan); }
+    }
+
+    /* Album / Playlist pages */
+    [sfc-name='Playlist'], [sfc-name='Album'] {
+      [sfc-name='AlbumHeader'], [sfc-name='AlbumHeaderMobile'] {
+        [sfc-name='ArtistChip'] .chip-name,
+        [sfc-name='ArtistChip'] .chip-favorite .chip-fav-btn { color: var(--bcp-cyan); opacity: 1; }
+        [sfc-name='AlbumActions'] [sfc-name="MoreBtn"] { color: var(--bcp-cyan); }
+        .top-metadata { color: var(--bcp-subtext-2); opacity: 1; }
+        .blurb-text   { color: var(--bcp-subtext); opacity: 1; }
+      }
+
+      /* Track lists */
+      .tracks-container {
+        .track-list {
+          color: var(--bcp-text);
+
+          .selected {
+            color: var(--bcp-black);
+            button.menu-btn:not(:active) { color: var(--bcp-black); }
+            [sfc-name='PlayingIndicator'] { --eq-bars-bg-color: var(--bcp-black); }
+            [sfc-name='Explicit'] svg { fill: var(--bcp-black); }
+          }
+
+          [sfc-name='PlaylistTrack']:not(.selected) .artist-link,
+          [sfc-name='PlaylistTrack']:not(.selected) .artist-section,
+          [sfc-name='PlaylistTrack']:not(.selected) .album-section,
+          [sfc-name='PlaylistTrack']:not(.selected) button.menu-btn,
+          [sfc-name='AlbumTrack']:not(.selected) .artist-link,
+          [sfc-name='AlbumTrack']:not(.selected) .artist-section,
+          [sfc-name='AlbumTrack']:not(.selected) .album-section,
+          [sfc-name='AlbumTrack']:not(.selected) button.menu-btn { color: var(--bcp-cyan); }
+
+          .ri-list-item:hover:not(.selected) { background-color: var(--bcp-sel); }
+        }
+        .popularity-dot { color: var(--bcp-cyan); }
+      }
+    }
+
+    /* Artist pages */
+    [sfc-name='Artist'] {
+      .artist-text { color: var(--bcp-text); }
+      [sfc-name='MediaItem'] .artist-name,
+      [sfc-name='MediaItem'] .ellipsis { color: var(--bcp-cyan); }
+      [sfc-name='MediaItem'] .item-releaseDate { color: var(--bcp-subtext); }
+
+      [sfc-name='QCardActions'] {
+        .playbtn ._svg-icon { background: var(--bcp-black); }
+        [sfc-name='QIcon'], [sfc-name='VueFeather'] {
+          color: var(--bcp-cyan);
+          [fill=white] { fill: var(--bcp-cyan); }
+        }
+      }
+      .artist-top .pinned-item .title-line { color: var(--bcp-cyan); }
+      .artist-top .artist-items [sfc-name='ListItemShort'] .content-album { color: var(--bcp-cyan); }
+    }
+
+    /* misc accents */
+    .see-all,
+    [sfc-name='GroupingHeader'] button,
+    [sfc-name='MediaItemSlider'] .more-like-container .title { color: var(--bcp-cyan); }
+    [sfc-name='MediaItemSlider'] [sfc-name='QCard'] .artistLink,
+    [sfc-name='MediaItemSlider'] [sfc-name='MediaItem'] .artistLink,
+    [section='recentlyPlayed'] [sfc-name='ListItemShort'] .content-artist { color: var(--bcp-cyan); }
+
+    [title='Home Settings'] { background-color: var(--bcp-surface-2); color: var(--bcp-cyan); }
+  }
+
+  /* =========================================================================
+     COMPACT PLAYLIST ROWS
+     Make the rich playlist track list as dense as the Library > Songs table.
+     A playlist row is [sfc-name='PlaylistTrack'] (same element as .ri-list-item);
+     its artwork is .artwork-section > .track-artwork > .track-artwork--image > img,
+     and that artwork is what drives the row height — so it's shrunk and the row
+     padding trimmed. Selectors confirmed against the live Cider 4 DOM. Scoped to
+     playlist rows by their SFC name; the Songs page is unaffected.
+     (To go full Songs-parity and drop the artwork entirely, replace the artwork
+     sizing rule with `.artwork-section { display: none; }`.)
+     ====================================================================== */
+  [sfc-name='PlaylistTrack'] {
+
+    /* tighten the row */
+    min-height: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+    /* shrink the whole artwork block so it stops setting the row height
+       (the wrappers carry the size, not just the <img>) */
+    .artwork-section {
+      width: 36px;
+      min-width: 36px;
+    }
+    .track-artwork,
+    .track-artwork--image,
+    .track-artwork--image img {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 4px;
+    }
+  }
+
+  /* =========================================================================
+     COMPACT PLAYLIST HEADER (banner)
+     Collapse the tall playlist hero into a slim title bar that keeps every
+     control, so the track list starts higher. The header root .album-header is
+     shared with album pages, so this is scoped via :has() to the playlist-only
+     [sfc-name='PlaylistPlaybackActions'] it contains — WebView2 is modern
+     Chromium, so :has() works. Selectors confirmed against the live Cider 4 DOM.
+     ====================================================================== */
+  .album-header:has([sfc-name='PlaylistPlaybackActions']) {
+    padding-top: 14px;
+    padding-bottom: 10px;
+    align-items: center;          /* sit the small artwork beside the details */
+
+    /* artwork mosaic → small thumbnail */
+    .album-artwork {
+      flex: 0 0 auto;
+      width: 60px;
+      min-width: 60px;
+      height: 60px;
+      margin-right: 14px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    /* force the 2×2 mosaic to scale into the 60px box regardless of its
+       original cell sizing */
+    .artwork-collection.multiple {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1px;
+      width: 60px;
+      height: 60px;
+    }
+    .album-artwork .artwork { width: 100%; height: 100%; }
+    .album-artwork img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* oversized title → normal heading */
+    .title--large,
+    .title--large .title-text {
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+    .title--large { margin-bottom: 4px; }
+
+    /* tighten the stacked details (outer .album-actions only, not the nested
+       more-button group) */
+    .meta-chips { margin-top: 2px; margin-bottom: 2px; }
+    .c-checkbox.q-mt-sm { margin-top: 6px; }
+    .album-details > .album-actions { margin-top: 8px; }
+  }
+
+  /* =========================================================================
+     RIGHT DRAWER  ·  QUEUE + LYRICS
+     PORT NOTE: original used .lyric-line / .lyricWaiting / .lyric-body. Cider 4
+     lyrics are .lyric-view .lyric-word with --defaultColor / --gradientColor.
+     ====================================================================== */
+  [sfc-name='RightDrawerContent'] {
+    [sfc-name='QCard'] { background: var(--bcp-surface); }
+
+    .lyric-view {
+      .lyric-word {
+        --defaultColor: var(--bcp-subtext);
+        --gradientColor: var(--bcp-cyan);
+      }
+      .lyric-word.is-finished { --defaultColor: var(--bcp-cyan); }
+      .lyric-text, .lyric-text-translated { color: var(--bcp-text); opacity: 1; }
+      /* SIGNATURE — the active lyric line glows */
+      .active .lyric-text   { color: var(--bcp-cyan); text-shadow: var(--bcp-glow); }
+      .finished .lyric-text { color: var(--bcp-cyan); }
+    }
+
+    .queue-item-list .q-icon { color: var(--bcp-text); }
+
+    [sfc-name='AMQueueItem'] {
+      .qmd-title-text   { color: var(--bcp-text); }
+      .qmd-artist_album { color: var(--bcp-subtext); }
+      .fa-solid         { color: var(--bcp-cyan); }
+      .remove-item-button { background: var(--bcp-red); .fa-solid { color: var(--bcp-black); } }
+    }
+
+    [sfc-name='QTabs'] {
+      background-color: var(--bcp-black);
+      .q-tab { color: var(--bcp-text); }
+      .q-tab--active { color: var(--bcp-cyan); }
+      .q-tab__indicator { background-color: var(--bcp-cyan); }
+    }
+  }
+
+  /* =========================================================================
+     MENUS / CONTEXT MENUS / TOOLTIPS
+     ====================================================================== */
+  .q-menu {
+    background-color: var(--bcp-surface-2);
+    border: 1px solid var(--bcp-line);
+
+    .q-hoverable:hover { background-color: var(--bcp-sel); }
+
+    [sfc-name='ContextMenuIcon'],
+    [sfc-name='QItem']:hover [sfc-name='QIcon'],
+    [sfc-name='CascadeItem']:hover [sfc-name='QIcon'],
+    [sfc-name="VueFeather"] { color: var(--bcp-cyan); }
+
+    [sfc-name='ContextMenuIconButton'] {
+      color: var(--bcp-cyan);
+      .text-default { color: var(--bcp-cyan); }
+      ._svg-icon { background-color: var(--bcp-cyan); }
+    }
+
+    [sfc-name='QItemSection'] {
+      color: var(--bcp-text);
+      [sfc-name='QIcon'] { color: var(--bcp-cyan); }
+    }
+
+    .q-btn.bg-primary,
+    .q-btn.bg-primary [sfc-name='QIcon'] { color: var(--bcp-black); }
+    [sfc-name='AMVolumeSlider'] .volumeBar .volume-range { --progressColor: var(--bcp-cyan); }
+  }
+
+  .q-tooltip { background-color: var(--bcp-surface-2); color: var(--bcp-text); }
+  .q-notifications .q-notification--standard { color: var(--bcp-black); }
+
+  /* form controls */
+  [sfc-name='CSelect'] select {
+    background-color: var(--bcp-surface);
+    border-color: var(--bcp-line);
+    color: var(--bcp-text);
+  }
+  [sfc-name='CSelect'] .c-select--label { background-color: var(--bcp-surface-2); }
+  input[type=checkbox][switch]          { background: var(--bcp-elevated); }
+  input[type=checkbox][switch]:checked  { background: var(--bcp-cyan); }
+  input[type=checkbox][switch]:before   { background: var(--bcp-black); }
+  input[type='number']                  { color: var(--bcp-text); }
+  button.bg-primary                     { color: var(--bcp-black); }
+
+  /* =========================================================================
+     DIALOGS  ·  SETTINGS / UPDATES / WHAT'S NEW / GENERIC
+     ====================================================================== */
+  [role='dialog'] [sfc-name='QCard'] {
+    background-color: var(--bcp-surface);
+    color: var(--bcp-text);
+
+    .close, [sfc-name='QItem'],
+    [sfc-name='QBtn']:not(.bg-red, .bg-primary).q-btn__content { color: var(--bcp-text); }
+
+    [sfc-name='QTabPanels'] {
+      background-color: var(--bcp-surface);
+      .q-field__control { background-color: transparent; }
+    }
+    .q-field__control {
+      background-color: var(--bcp-black);
+      .q-field__native { color: var(--bcp-text); }
+      .q-field__label  { color: var(--bcp-subtext); }
+    }
+    .q-field__counter { color: var(--bcp-subtext); }
+    .q-btn.bg-primary, .q-btn.bg-primary [sfc-name='QIcon'] { color: var(--bcp-black); }
+  }
+
+  [sfc-name='QDialog'] {
+    .titlebar-button.close { color: var(--bcp-text); }
+
+    .settings-window {
+      .nav-area { border-right-color: var(--bcp-line); }
+
+      [sfc-name='SettingsSidebar'] {
+        background-color: var(--bcp-surface-2);
+        .settings-sidebar-item.selected { color: var(--bcp-cyan); }
+        .settings-sidebar-item:not(.selected) .title-icon { color: var(--bcp-cyan); }
+      }
+
+      .content-area {
+        background-color: var(--bcp-black);
+        button.bg-primary.text-white { color: var(--bcp-black); }
+        [sfc-name='QItemLabel'] { color: var(--bcp-text); }
+        [sfc-name='QItemLabel'].text-caption { color: var(--bcp-subtext); }
+        [sfc-name='SettingItem'] {
+          color: var(--bcp-subtext-2);
+          .q-item__section [sfc-name='QIcon'] { color: var(--bcp-text); }
+        }
+        .q-expansion-item__content { background-color: var(--bcp-surface-2); }
+        .q-field__control input { color: var(--bcp-text); }
+        .q-field__control::before { border-color: var(--bcp-line); }
+      }
+
+      /* in-app Themes / Plugins lists */
+      .themes-page [sfc-name='QBtn'].q-btn--actionable,
+      .plugins-page .q-btn--flat { background-color: transparent; color: var(--bcp-cyan); }
+    }
+
+    .updates-window {
+      background: var(--bcp-black);
+      [sfc-name='QTabs'] {
+        background: var(--bcp-surface-2);
+        .q-tab { color: var(--bcp-text); }
+        .q-tab--active { color: var(--bcp-cyan); }
+        .q-tab__indicator { background: var(--bcp-cyan); }
+      }
+      .versions-list {
+        background-color: var(--bcp-surface);
+        .bg-primary, .q-hoverable:hover { background: var(--bcp-sel); }
+        [sfc-name='QIcon'], [sfc-name='QItemLabel'] { color: var(--bcp-text); }
+        [sfc-name='QBtn'] { background: var(--bcp-cyan); .q-btn__content { color: var(--bcp-black); } }
+      }
+    }
+  }
+
+  /* command center + audio settings dialog */
+  [sfc-name='QGlobalDialog'] {
+    .command-center {
+      background: var(--bcp-surface);
+      .bg-primary { background: var(--bcp-cyan); }
+      [sfc-name='QBtn'] .q-btn__content { color: var(--bcp-black); }
+      [sfc-name='QItemSection'] { color: var(--bcp-text); }
+      [sfc-name='QInput'] {
+        background: var(--bcp-surface-2);
+        .q-field__native { color: var(--bcp-text); }
+        .q-field__control::before { border-color: var(--bcp-line); }
+      }
+    }
+    .am-audio-settings {
+      background: var(--bcp-surface);
+      [sfc-name='AMEQ'] {
+        .eq-freq, .eq-q { background-color: var(--bcp-surface-2); color: var(--bcp-text); }
+        [sfc-name='QBtn'] { color: var(--bcp-black); }
+      }
+    }
+  }
+
+  /* =========================================================================
+     IMMERSIVE / FULLSCREEN MODE
+     PORT NOTE: original .fullscreen-view (its single biggest section, 100+
+     rules) is gone. Cider 4's fullscreen is .immersive-player and the Sing
+     view [sfc-name='ImmersiveSingLyrics']. Re-styled below at the basics;
+     this is the area most worth extending by hand if you live in fullscreen.
+     ====================================================================== */
+  .immersive-player {
+    [sfc-name='AMPMetadataMojave'] .song-name { color: var(--bcp-text); }
+    [sfc-name='AMPMetadataMojave'] .release-info { color: var(--bcp-subtext); }
+
+    .lyricView {
+      .lyric-word { --defaultColor: var(--bcp-subtext); --gradientColor: var(--bcp-cyan); }
+      .lyric-text, .lyric-text-translated { color: var(--bcp-text); opacity: 1; }
+      .active .lyric-text { color: var(--bcp-cyan); text-shadow: var(--bcp-glow); }
+      .finished .lyric-word, .finished .lyric-text { color: var(--bcp-cyan); }
+    }
+
+    [sfc-name='AMProgressBar'] .overlay-progress-bar { --progressColor: var(--bcp-cyan); }
+    [sfc-name='AMProgressWidget'] .overlay-progress-bar { --progressColor: var(--bcp-cyan); }
+    [sfc-name='AMVolumeSlider'] .volume-range { --progressColor: var(--bcp-cyan); }
+    .player-playback-controls .action-active { color: var(--bcp-cyan); }
+  }
+
+  [sfc-name='ImmersiveSingLyrics'] {
+    .lyric-word { --defaultColor: var(--bcp-subtext); --gradientColor: var(--bcp-cyan); }
+    .lyric-text, .lyric-text-translated { color: var(--bcp-text); }
+    .active .lyric-text { color: var(--bcp-cyan); text-shadow: var(--bcp-glow); }
+    .finished .lyric-word, .finished .lyric-text { color: var(--bcp-cyan); }
+  }
+
+  .im-toolbar { background: var(--bcp-black); }
+
+  /* miniplayer + coverflow progress */
+  [sfc-name='MiniPlayerLayout'] [sfc-name='MiniPlayerControls'] .overlay-progress-bar { --progressColor: var(--bcp-cyan); }
+  .coverflow-player .overlay-progress-bar { --progressColor: var(--bcp-cyan); }
+
+  /* =========================================================================
+     LIBRARY PAGES + THEMES/PLUGINS GALLERY
+     ====================================================================== */
+  [sfc-name='LibrarySongs'] .header-frow { background: var(--bcp-black); }
+  [sfc-name='LibraryAlbums'] [sfc-name='CInput'] { background: var(--bcp-surface-2); }
+  [sfc-name='LibraryAlbums'] [sfc-name='RichAlbumGridItem'] .artistLink { color: var(--bcp-cyan); }
+  [sfc-name='LibraryArtists'] {
+    .artist-toolbar, .q-page { background: var(--bcp-surface); }
+    [sfc-name='CInput'] { background: var(--bcp-surface-2); }
+    [sfc-name='QItemLabel'] { color: var(--bcp-text); }
+    [sfc-name='RichAlbumGridItem'] .artistLink { color: var(--bcp-cyan); }
+  }
+
+  [sfc-name='ThemesPage'], [sfc-name='PluginsPage'] {
+    [sfc-name='GalleryItem'] [sfc-name='QCardSection'],
+    [sfc-name='GalleryItem'] .gallery-card-content {
+      background-color: var(--bcp-surface-2);
+      color: var(--bcp-text);
+    }
+    [sfc-name='QBadge'] { color: var(--bcp-black); }
+  }
+
+  [sfc-name='RecentlyAdded'] .mediaitem-grid [sfc-name='MediaItem'] .artistLink,
+  [sfc-name='ArtistFeed'] .mediaitem-grid [sfc-name='MediaItem'] .artistLink { color: var(--bcp-cyan); }
+}
+
+/* =============================================================================
+   LIGHT MODE
+   The original had an experimental light mode. Cider 4 themes scope light under
+   body.body--light. Left intentionally minimal — this theme is built for OLED
+   dark. Add rules here mirroring the block above if you want a full light variant.
+   ========================================================================== */
+body.body--light {
+  --keyColor: #0096b0;
+  --musicKeyColor: #0096b0;
+  --q-primary: #0096b0;
+}

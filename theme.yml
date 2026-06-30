@@ -1,0 +1,24 @@
+name: CiderPunk - Dark
+author: pipstar247
+stylesheets:
+  - name: Neon Cyan (OLED)
+    file: main.scss
+    description: Base theme — pure-black OLED, neon cyan accent, compact playlists. Enable one accent below to recolour the neon.
+  - name: "Accent: Crimson #FF0055"
+    file: accent-crimson.scss
+    description: Recolours the neon accent. Enable on top of the base, one accent at a time.
+  - name: "Accent: Mint #33F27F"
+    file: accent-mint.scss
+    description: Recolours the neon accent. Enable on top of the base, one accent at a time.
+  - name: "Accent: Amber #FAD92A"
+    file: accent-amber.scss
+    description: Recolours the neon accent. Enable on top of the base, one accent at a time.
+  - name: "Accent: Hot Pink #FC388C"
+    file: accent-hotpink.scss
+    description: Recolours the neon accent. Enable on top of the base, one accent at a time.
+  - name: "Accent: Orange #FF6B00"
+    file: accent-orange.scss
+    description: Recolours the neon accent. Enable on top of the base, one accent at a time.
+  - name: "Accent: Violet #A905E8"
+    file: accent-violet.scss
+    description: Recolours the neon accent. Enable on top of the base, one accent at a time.

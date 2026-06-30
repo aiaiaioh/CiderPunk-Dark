@@ -1,0 +1,10 @@
+/* Better Cider Neon — Accent: Orange (#FF6B00)
+   ---------------------------------------------------------------------------
+   Enable this ON TOP OF the "Neon Cyan (OLED)" base style — it only redefines
+   the accent tokens; the base supplies everything else. Enable one accent at a
+   time. The glow and selection wash recolour automatically from --bcp-accent-rgb. */
+body.body--dark {
+  --bcp-accent-rgb: 255, 107, 0;
+  --bcp-cyan:       #FF6B00;
+  --bcp-cyan-deep:  #c25200;
+}

@@ -1,0 +1,10 @@
+/* Better Cider Neon — Accent: Violet (#A905E8)
+   ---------------------------------------------------------------------------
+   Enable this ON TOP OF the "Neon Cyan (OLED)" base style — it only redefines
+   the accent tokens; the base supplies everything else. Enable one accent at a
+   time. The glow and selection wash recolour automatically from --bcp-accent-rgb. */
+body.body--dark {
+  --bcp-accent-rgb: 169, 5, 232;
+  --bcp-cyan:       #A905E8;
+  --bcp-cyan-deep:  #7a04a8;
+}

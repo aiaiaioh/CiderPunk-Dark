@@ -1,0 +1,10 @@
+/* Better Cider Neon — Accent: Amber (#FAD92A)
+   ---------------------------------------------------------------------------
+   Enable this ON TOP OF the "Neon Cyan (OLED)" base style — it only redefines
+   the accent tokens; the base supplies everything else. Enable one accent at a
+   time. The glow and selection wash recolour automatically from --bcp-accent-rgb. */
+body.body--dark {
+  --bcp-accent-rgb: 250, 217, 42;
+  --bcp-cyan:       #FAD92A;
+  --bcp-cyan-deep:  #c7a800;
+}
