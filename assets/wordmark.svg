@@ -1,0 +1,28 @@
+<svg viewBox="0 0 1700 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CiderPunk Dark">
+  <defs>
+    <linearGradient id="wm-g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00E0FF"/>
+      <stop offset="100%" stop-color="#FC388C"/>
+    </linearGradient>
+    <filter id="wm-glow" x="-30%" y="-80%" width="160%" height="260%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+  </defs>
+  <rect width="1700" height="680" rx="28" fill="#000000"/>
+
+  <!-- original 1280x380 artwork, unchanged, centred with generous black margin -->
+  <g transform="translate(210,150)">
+    <g font-family="'Arial Black','Montserrat','Helvetica Neue',Arial,sans-serif" font-weight="900" text-anchor="middle">
+      <text x="640" y="180" font-size="118" letter-spacing="6" fill="#00E0FF" opacity="0.7" filter="url(#wm-glow)">CIDERPUNK</text>
+      <text x="640" y="180" font-size="118" letter-spacing="6" fill="#EAFEFF">CIDERPUNK</text>
+    </g>
+
+    <path d="M300 246 C 400 246 420 224 500 246 C 590 270 630 224 720 246 C 810 268 850 226 980 246"
+          fill="none" stroke="url(#wm-g)" stroke-width="6" stroke-linecap="round" filter="url(#wm-glow)"/>
+    <path d="M300 246 C 400 246 420 224 500 246 C 590 270 630 224 720 246 C 810 268 850 226 980 246"
+          fill="none" stroke="#EAFEFF" stroke-width="2" stroke-linecap="round"/>
+
+    <text x="640" y="320" text-anchor="middle" font-family="'Arial','Helvetica Neue',sans-serif"
+          font-weight="700" font-size="38" letter-spacing="18" fill="#FC388C">DARK</text>
+  </g>
+</svg>
