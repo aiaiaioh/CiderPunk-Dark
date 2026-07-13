@@ -6,7 +6,6 @@ A pure-black **OLED** theme for [Cider](https://cider.sh) with a **neon cyberpun
 
 ![CiderPunk - Dark](assets/screenshot-1.jpg)
 
-> App icon / tile: `assets/logo.svg` (SVG) and `assets/logo-512.png` / `assets/logo-1024.png` (raster).
 
 ---
 
