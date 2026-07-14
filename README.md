@@ -1,4 +1,4 @@
-# CiderPunk — Dark
+# CiderPunk - Dark
 
 A pure-black **OLED** theme for [Cider](https://cider.sh) with a **neon cyberpunk** accent and a tightened, information-dense layout. Cyan by default, with six more neon accents you can switch in one click.
 
@@ -11,11 +11,11 @@ A pure-black **OLED** theme for [Cider](https://cider.sh) with a **neon cyberpun
 
 ## Features
 
-- **True-black OLED** backgrounds across the chrome, sidebar, content, drawers, dialogs, immersive mode, and menus — easy on the eyes and on OLED panels.
+- **True-black OLED** backgrounds across the chrome, sidebar, content, drawers, dialogs, immersive mode, and menus - easy on the eyes and on OLED panels.
 - **Neon accent with a glow signature** on the things that should pop: the active sidebar item, the active lyric line, progress bars, and the queue/lyrics toggles.
-- **Seven accents**, switchable from the theme settings without reinstalling — the glow and selection highlight recolour with the accent.
-- **Compact playlists** — both the track rows *and* the header/banner are slimmed down, so the song list starts higher and shows far more at a glance.
-- **Themed end-to-end** — context menus, settings window, command center, library pages, the in-app marketplace gallery, and Windows window controls.
+- **Seven accents**, switchable from the theme settings without reinstalling - the glow and selection highlight recolour with the accent.
+- **Compact playlists** - both the track rows *and* the header/banner are slimmed down, so the song list starts higher and shows far more at a glance.
+- **Themed end-to-end** - context menus, settings window, command center, library pages, the in-app marketplace gallery, and Windows window controls.
 - Built on Cider's stable `[sfc-name]` hooks and a single token block, so it's easy to fork and retune.
 
 ## Accents
@@ -48,7 +48,7 @@ A pure-black **OLED** theme for [Cider](https://cider.sh) with a **neon cyberpun
 1. Cider → **Settings → Extensions** (Manage Styles).
 2. **Explore GitHub Themes → Install from GitHub URL**, and paste this repository's URL.
 3. Enable **Neon Cyan (OLED)**, then optionally enable **one** accent on top of it.
-4. Set Cider's appearance to **Dark** — the theme is scoped to the dark color scheme.
+4. Set Cider's appearance to **Dark** - the theme is scoped to the dark color scheme.
 
 **Manual**
 1. Open Cider's themes folder (Extensions → Maintenance → *Open AppData folder*; on the
